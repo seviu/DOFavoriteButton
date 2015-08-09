@@ -97,13 +97,13 @@ public class DOFavoriteButton: UIButton {
         addTargets()
     }
 
-    public required init(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         createLayers(image: UIImage())
         addTargets()
     }
 
-    private func createLayers(#image: UIImage!) {
+    private func createLayers(image image: UIImage!) {
         self.layer.sublayers = nil
 
         let imageFrame = CGRectMake(frame.size.width / 2 - frame.size.width / 4, frame.size.height / 2 - frame.size.height / 4, frame.size.width / 2, frame.size.height / 2)
@@ -171,10 +171,11 @@ public class DOFavoriteButton: UIButton {
         imageShape.actions = ["fillColor": NSNull()]
         self.layer.addSublayer(imageShape)
 
-        imageShape.mask = CALayer()
-        imageShape.mask.contents = image.CGImage
-        imageShape.mask.bounds = imageFrame
-        imageShape.mask.position = imgCenterPoint
+        let mask = CALayer()
+        mask.contents = image.CGImage
+        mask.bounds = imageFrame
+        mask.position = imgCenterPoint
+        imageShape.mask = mask
 
         //==============================
         // circle transform animation
